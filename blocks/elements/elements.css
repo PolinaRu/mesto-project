@@ -1,0 +1,11 @@
+.elements {
+  padding-top: 51px;
+  margin: 0;
+  width: 100%;
+  
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+
+  background-color: cadetblue;
+}
