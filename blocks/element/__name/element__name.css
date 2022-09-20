@@ -1,0 +1,8 @@
+.element__name {
+  margin: 0;
+
+  max-width: calc(100% - 58px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

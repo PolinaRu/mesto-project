@@ -6,6 +6,7 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row-reverse;
-
-  background-color: cadetblue;
+  justify-content: space-between;
+  row-gap: 20px;
+  column-gap: 17px;
 }
