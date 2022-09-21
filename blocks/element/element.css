@@ -3,5 +3,8 @@
   color: black;
   border-radius: 10px;
   overflow: hidden;
-  max-width: 282px;
+  width: 282px;
+  height: 361px;
+  display: flex;
+  flex-direction: column;
 }
