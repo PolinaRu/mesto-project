@@ -1,3 +1,9 @@
 .profile__info {
   flex: 1;
+
+  display: grid;
+  grid-template-columns: fit-content(300px) auto;
+  justify-content: start;
+  align-items: end;
+  column-gap: 18px;
 }
