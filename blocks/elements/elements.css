@@ -10,3 +10,9 @@
   row-gap: 20px;
   column-gap: 17px;
 }
+
+@media (max-width: 400px) {
+  .elements {
+    padding-top: 36px;
+  }
+}

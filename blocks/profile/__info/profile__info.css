@@ -7,3 +7,9 @@
   align-items: end;
   column-gap: 18px;
 }
+
+@media (max-width: 720px) {
+  .profile__info {
+    justify-items: center;
+  }
+}
