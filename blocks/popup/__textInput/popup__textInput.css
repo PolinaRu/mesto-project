@@ -1,0 +1,8 @@
+.popup__textInput {
+  font-size: 14px;
+  line-height: 1.2;
+  font-weight: 400;
+  border: none;
+  border-bottom: 1px solid #00000014;
+  padding: 20px 0 13px 0;
+}
