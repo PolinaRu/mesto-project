@@ -3,6 +3,16 @@
   background-color: #000;
   color: #fff;
   font-size: 18px;
+  line-height: 22px;
   border-radius: 2px;
   margin-top: 48px;
+}
+
+@media (max-width: 570px) {
+  .popup__saveButton {
+    height: 46px;
+    line-height: 17px;
+    font-size: 14px;
+    margin-top: 45px;
+  }
 }

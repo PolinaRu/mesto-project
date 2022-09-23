@@ -5,3 +5,10 @@
   font-weight: 900;
   line-height: 29px;
 }
+
+@media (max-width: 570px) {
+  .popup__caption {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

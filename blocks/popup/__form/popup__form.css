@@ -15,3 +15,13 @@
   box-sizing: border-box;
   color: black;
 }
+
+@media (max-width: 570px) {
+  .popup__form {
+    padding: 25px 22px;
+    height: 322px;
+    width: calc(100% - 38px);
+    top: calc((100% - 322px) / 2);
+    left: 19px;
+  }
+}
