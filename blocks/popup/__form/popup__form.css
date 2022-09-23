@@ -1,0 +1,17 @@
+.popup__form {
+  position: fixed;
+  top: calc((100% - 550px)/2);
+  left: calc((100% - 600px)/2);
+  background-color: white;
+border-radius: 10px;
+overflow: hidden;
+width: 550px;
+height: 600px;
+
+display: flex;
+flex-direction: column;
+justify-content: space-around;
+padding: 50px 30px 20px;
+box-sizing: border-box;
+color: black;
+}

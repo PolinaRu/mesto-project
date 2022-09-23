@@ -18,3 +18,7 @@
 @import url(../blocks/profile/__edit/profile__edit.css);
 @import url(../blocks/profile/__name/profile__name.css);
 @import url(../blocks/profile/__about/profile__about.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opend/popup_opend.css);
+@import url(../blocks/popup/__closeButton/popup__closeButton.css);
+@import url(../blocks/popup/__form/popup__form.css);
