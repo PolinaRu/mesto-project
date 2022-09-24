@@ -75,14 +75,16 @@
       </div>
     </main>
     <footer class="footer">&copy; 2020 Mesto Russia</footer>
-    <div class="popup">
+    <div class="popup popup_opend">
+      <div class="popup__container">
       <form class="popup__form" action="#">
-        <button class="popup__closeButton" type="button"></button>
         <h2 class="popup__caption">Редактировать профиль</h2>
         <input type="text" class="popup__textInput" id="name" value="Жак-Ив Кусто" />
         <input type="text" class="popup__textInput" id="about" value="Исследователь океана" />
         <button type="submit" class="popup__saveButton">Сохранить</button>
-      </form>
+      </form>      
+      <button class="popup__closeButton" type="button"></button>
+    </div>
     </div>
   </body>
 </html>
