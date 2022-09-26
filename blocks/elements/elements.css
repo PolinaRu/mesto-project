@@ -4,8 +4,7 @@
   width: 100%;
   
   display: flex;
-  flex-wrap: wrap-reverse;
-  flex-direction: row-reverse;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   row-gap: 20px;

@@ -5,9 +5,21 @@
   box-sizing: border-box;
   padding: 0;
   background-color: #000;
+  background-image: url(../../../image/Vector.svg);
+  background-position: center;
+  background-size: 10px;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
 
 .profile__edit:hover {
-  opacity: 80%;
+  opacity: 60%;
+}
+
+@media (max-width: 400px) {
+  .profile__edit {
+    width: 18px;
+    height: 18px;
+    background-size: 7.5px;
+  }
 }

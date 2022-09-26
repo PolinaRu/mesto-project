@@ -7,5 +7,6 @@
   .popup__container {
     margin-top: calc((100vh - 322px) / 2);
     margin-left: 19px;
+    margin-right: 19px;
   }
 }

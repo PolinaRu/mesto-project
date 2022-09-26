@@ -10,5 +10,6 @@
   .popup__caption {
     font-size: 18px;
     line-height: 22px;
+    padding-bottom: 45px;
   }
 }

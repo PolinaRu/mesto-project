@@ -13,9 +13,10 @@
 }
 
 .element__like:hover {
-  opacity: 80%;
+  opacity: 50%;
 }
 
 .element__like:active {
   background-image: url(../../../image/like-black.png);
+  opacity: 1;
 }

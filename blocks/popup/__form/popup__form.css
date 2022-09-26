@@ -1,9 +1,7 @@
 .popup__form {
   background-color: white;
   border-radius: 10px;
-  overflow: hidden;
-  width: 430px;
-  height: 330px;
+  max-width: 430px;
 
   display: flex;
   flex-direction: column;
@@ -17,6 +15,5 @@
   .popup__form {
     padding: 25px 22px;
     height: 322px;
-    width: calc(100vw - 38px);
   }
 }
