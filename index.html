@@ -22,66 +22,28 @@
         </div>
         <button class="profile__add-button" type="button" aria-label="добавить Место."></button>
       </section>
-      <section class="elements">
-        <article class="element">
-          <div style="background-image: url(./image/karachai.jpg);" alt="Сетинский храм." class="element__image"></div>
-          <button class="element__drop" type="button"></button>
-          <div class="element__text">
-            <h2 class="element__name">Карачаево-Черкесия</h2>
-            <button class="element__like" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <div style="background-image: url(./image/dombai.png);" alt="горы Домбая." class="element__image"></div>
-          <div class="element__text">
-            <h2 class="element__name">Домбай</h2>
-            <button class="element__like" type="button"></button>
-            <button class="element__drop" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <div style="background-image: url(./image/elbrus.png);" alt="Гора Эльбрус." class="element__image"></div>
-          <div class="element__text">
-            <h2 class="element__name">Гора Эльбрус</h2>
-            <button class="element__like" type="button"></button>
-            <button class="element__drop" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <div style="background-image: url(./image/dombai.png);" alt="горы Домбая." class="element__image"></div>
-          <div class="element__text">
-            <h2 class="element__name">Домбай</h2>
-            <button class="element__like" type="button"></button>
-            <button class="element__drop" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <div style="background-image: url(./image/elbrus.png);" alt="Гора Эльбрус." class="element__image"></div>
-          <div class="element__text">
-            <h2 class="element__name">Гора Эльбрус</h2>
-            <button class="element__like" type="button"></button>
-            <button class="element__drop" type="button"></button>
-          </div>
-        </article>
-        <article class="element">
-          <div style="background-image: url(./image/karachai.jpg);" alt="Сетинский храм." class="element__image"></div>
-          <div class="element__text">
-            <h2 class="element__name">Карачаевск</h2>
-            <button class="element__like" type="button"></button>
-            <button class="element__drop" type="button"></button>
-          </div>
-        </article>
-      </section>
+      <section class="elements"></section>
     </main>
     <footer>
       <p class="footer">&copy; 2020 Mesto Russia</p></footer>
-    <div class="popup">
+    <div class="popup" name="editProfile">
       <div class="popup__container">
-      <form class="popup__form" action="#" name="editProfile" method="POST">
+      <form class="popup__form" action="#" method="POST">
         <h2 class="popup__caption">Редактировать профиль</h2>
         <input type="text" class="popup__text-input" id="name" name="form-name" placeholder="Имя" />
         <input type="text" class="popup__text-input" id="about" name="form-about" placeholder="О себе" />
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button" name="form-saveProf">Сохранить</button>
+      </form>      
+      <button class="popup__close-button" type="button"></button>
+    </div>
+    </div>
+    <div class="popup" name="addElement">
+      <div class="popup__container">
+      <form class="popup__form" action="#" method="POST">
+        <h2 class="popup__caption">Новое место</h2>
+        <input type="text" class="popup__text-input" id="nameEl" name="form-nameEl" placeholder="Название" />
+        <input type="text" class="popup__text-input" id="linkEl" name="form-linkEl" placeholder="Ссылка на картинку" />
+        <button type="submit" class="popup__save-button" name="form-saveEl">Сохранить</button>
       </form>      
       <button class="popup__close-button" type="button"></button>
     </div>
