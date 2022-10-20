@@ -26,28 +26,40 @@
     </main>
     <footer>
       <p class="footer">&copy; 2020 Mesto Russia</p></footer>
-    <div class="popup" name="editProfile">
+    <div class="popup" id="editProfile">
       <div class="popup__container">
       <form class="popup__form" action="#" method="POST">
         <h2 class="popup__caption">Редактировать профиль</h2>
         <input type="text" class="popup__text-input" id="name" name="form-name" placeholder="Имя" />
         <input type="text" class="popup__text-input" id="about" name="form-about" placeholder="О себе" />
-        <button type="submit" class="popup__save-button" name="form-saveProf">Сохранить</button>
+        <button type="submit" class="popup__save-button" id="form-saveProf">Сохранить</button>
       </form>      
-      <button class="popup__close-button" type="button"></button>
+      <button class="popup__close-button" type="button" id="closeEdit"></button>
     </div>
     </div>
-    <div class="popup" name="addElement">
+    <div class="popup" id="addElement">
       <div class="popup__container">
       <form class="popup__form" action="#" method="POST">
         <h2 class="popup__caption">Новое место</h2>
         <input type="text" class="popup__text-input" id="nameEl" name="form-nameEl" placeholder="Название" />
         <input type="text" class="popup__text-input" id="linkEl" name="form-linkEl" placeholder="Ссылка на картинку" />
-        <button type="submit" class="popup__save-button" name="form-saveEl">Сохранить</button>
+        <button type="submit" class="popup__save-button" id="form-saveEl">Создать</button>
       </form>      
-      <button class="popup__close-button" type="button"></button>
+      <button class="popup__close-button" type="button" id="closeAddEl"></button>
     </div>
     </div>
+
+    <template id="card-template">
+    <article class="element">
+      <div class="element__image"></div>
+      <button class="element__drop" type="button"></button>
+      <div class="element__text">
+        <h2 class="element__name"></h2>
+        <button class="element__like" type="button"></button>
+      </div>
+    </article>
+  </template>
+
     <script src="./index.js"></script>
   </body>
 </html>

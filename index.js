@@ -1,6 +1,6 @@
 const profile__name = document.querySelector('.profile__name');
 const profile__about = document.querySelector('.profile__about');
-let elements = document.querySelector('.elements');
+const elements = document.querySelector('.elements');
 const initialCards = [
   {
     name: 'Архыз',
@@ -34,11 +34,20 @@ document.querySelector('.profile__edit').addEventListener('click', function() {
   document.querySelector('#editProfile').classList.toggle('popup_opend');
 })
 
-document.querySelector('.popup__close-button').addEventListener('click', function() {
-  document.querySelector('#editProfile').classList.toggle('popup_opend');
+document.querySelector('.profile__add-button').addEventListener('click', function() {
+  document.querySelector('#addElement').classList.toggle('popup_opend');
 })
 
-document.querySelector('.popup__save-button').addEventListener('submit', formSubmitHandler); 
+document.querySelector('#closeEdit').addEventListener('click', function() {
+  document.querySelector('#editProfile').classList.remove('popup_opend');
+})
+
+document.querySelector('#closeAddEl').addEventListener('click', function() {
+  document.querySelector('#addElement').classList.remove('popup_opend');
+})
+
+document.querySelector('#form-saveProf').addEventListener('submit', formSubmitHandler); 
+document.querySelector('#form-saveEl').addEventListener('submit', formSubmitElement);
 
 function formSubmitHandler(evt) {
   evt.preventDefault();
@@ -49,15 +58,23 @@ function formSubmitHandler(evt) {
   document.querySelector('.popup').classList.toggle('popup_opend');
 }
 
+function formSubmitElement(evt) {
+  evt.preventDefault();
+  addElement(document.querySelector('#nameEl').value, document.querySelector('#linkEl').value);
+}
+
 function addElement(nameEl, linkEl) {
-  elements.innerHTML += `<article class="element">
-  <div style="background-image: url(${linkEl});" alt="${nameEl}" class="element__image"></div>
-  <button class="element__drop" type="button"></button>
-  <div class="element__text">
-    <h2 class="element__name">${nameEl}</h2>
-    <button class="element__like" type="button"></button>
-  </div>
-</article>`;
+  const cardTemplate = document.querySelector('#card-template').content;
+  const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
+
+  cardElement.querySelector('.element__name').textContent = nameEl;
+  cardElement.querySelector('.element__image').style.backgroundImage = `url(${linkEl})`;
+  cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+  });
+
+  elements.append(cardElement);
+
 }
 
 for (let i in initialCards) {
