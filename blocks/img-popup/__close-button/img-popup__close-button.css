@@ -1,0 +1,4 @@
+.img-popup__close-button {
+  top: 50px;
+  right: calc(12.5vw - 52px);
+}
