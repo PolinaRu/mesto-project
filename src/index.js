@@ -23,8 +23,8 @@ const formProfile = document.querySelector("#form-Profile");
 const formElement = document.querySelector("#form-Element");
 
 
-formProfile.addEventListener("submit", formSubmitHandler);
-formElement.addEventListener("submit", formSubmitElement);
+formProfile.addEventListener("submit", submitFormHandler);
+formElement.addEventListener("submit", submitFormElement);
 
 profileEditButton.addEventListener("click", function () {
   profileEditName.value = profileName.textContent;
@@ -48,7 +48,7 @@ function closePopup(popup) {
   popup.classList.remove("popup_opend");
 }
 
-function formSubmitHandler(evt) {
+function submitFormHandler(evt) {
   evt.preventDefault();
 
   profileName.textContent = profileEditName.value;
@@ -57,7 +57,7 @@ function formSubmitHandler(evt) {
   document.querySelector("#edit-Profile").classList.remove("popup_opend");
 }
 
-function formSubmitElement(evt) {
+function submitFormElement(evt) {
   evt.preventDefault();
 
   const nameEl = newElementName.value;
