@@ -1,12 +1,14 @@
 const profileName = document.querySelector(".profile__name");
 const profileEditName = document.querySelector("#name");
 const profileAbout = document.querySelector(".profile__about");
+const profileEdit = document.querySelector("#edit-Profile");
 const profileEditAbout = document.querySelector("#about");
 const profileEditButton = document.querySelector(".profile__edit");
 const profileAddButton = document.querySelector(".profile__add-button");
 
 const newElementName = document.querySelector("#nameEl");
 const newElementLink = document.querySelector("#linkEl");
+const newElementAdd = document.querySelector("#add-Element");
 
 const closeButtonEdit = document.querySelector("#closeEdit");
 const closeButtonAdd = document.querySelector("#closeAddEl");
@@ -20,19 +22,19 @@ const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
 
 const formProfile = document.querySelector("#form-Profile");
-const formElement = document.querySelector("#form-Element");
+const formAddCard = document.querySelector("#form-Element");
 
 
-formProfile.addEventListener("submit", submitFormHandler);
-formElement.addEventListener("submit", submitFormElement);
+formProfile.addEventListener("submit", submitEditProfileForm);
+formAddCard.addEventListener("submit", submitAddCardForm);
 
 profileEditButton.addEventListener("click", function () {
   profileEditName.value = profileName.textContent;
   profileEditAbout.value = profileAbout.textContent;
-  openPopup(document.querySelector("#edit-Profile"));
+  openPopup(profileEdit);
 });
 
-profileAddButton.addEventListener("click", () => { openPopup(document.querySelector("#add-Element"))});
+profileAddButton.addEventListener("click", () => { openPopup(newElementAdd)});
 
 closeButtonEdit.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
 
@@ -48,26 +50,27 @@ function closePopup(popup) {
   popup.classList.remove("popup_opend");
 }
 
-function submitFormHandler(evt) {
+function submitEditProfileForm(evt) {
   evt.preventDefault();
 
   profileName.textContent = profileEditName.value;
   profileAbout.textContent = document.querySelector("#about").value;
 
-  document.querySelector("#edit-Profile").classList.remove("popup_opend");
+  closePopup(evt.target.closest(".popup"));
 }
 
-function submitFormElement(evt) {
+function submitAddCardForm(evt) {
   evt.preventDefault();
 
   const nameEl = newElementName.value;
   const linkEl = newElementLink.value;
 
   addElement(nameEl, linkEl);
-  /* Добавление элемента в масси - а надо ли?
-  initialCards.push({ name: nameEl, link: linkEl });*/
 
-  document.querySelector("#add-Element").classList.remove("popup_opend");
+  newElementName.value = '';
+  newElementLink.value = '';
+
+  closePopup(newElementAdd);
 }
 
 function openPopupImg(nameEl, linkEl) {
