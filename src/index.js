@@ -43,7 +43,7 @@ closeButtonAdd.addEventListener("click", (evt) => {closePopup(evt.target.closest
 closeButtonImg.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
 
 function openPopup(popup) {
-  popup.classList.toggle("popup_opend");
+  popup.classList.add("popup_opend");
 }
 
 function closePopup(popup) {
@@ -56,7 +56,7 @@ function submitEditProfileForm(evt) {
   profileName.textContent = profileEditName.value;
   profileAbout.textContent = document.querySelector("#about").value;
 
-  closePopup(evt.target.closest(".popup"));
+  closePopup(formProfile.closest(".popup"));
 }
 
 function submitAddCardForm(evt) {
