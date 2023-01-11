@@ -124,23 +124,23 @@ function addElement(nameEl, linkEl) {
 }
 
 //Отрисовываем текст ошибки и подсветку, span ошибки находим через id соответствующего input
-const showInputError = (formElement, inputElement, errorMessage) => {
+const showInputError = (settings, formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('popup__text-input_type_error');
+  inputElement.classList.add(settings.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add('popup__span-error_active');
+  errorElement.classList.add(settings.errorClass);
 };
 
 //аналогично скрываем ошибку
-const hideInputError = (formElement, inputElement) => {
+const hideInputError = (settings, formElement, inputElement) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__text-input_type_error');
-  errorElement.classList.remove('popup__span-error_active');
+  inputElement.classList.remove(settings.inputErrorClass);
+  errorElement.classList.remove(settings.errorClass);
   errorElement.textContent = '';
 }; 
 
 //Проверка валидности конкретного поля в форме
-const isValid = (formElement, inputElement) => {
+const isValid = (settings, formElement, inputElement) => {
   //если это не влезло в регулярку
   if (inputElement.validity.patternMismatch) {
       inputElement.setCustomValidity(inputElement.dataset.errorMessage);
@@ -149,9 +149,9 @@ const isValid = (formElement, inputElement) => {
   }
 
   if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
+    showInputError(settings, formElement, inputElement, inputElement.validationMessage);
   } else {
-    hideInputError(formElement, inputElement);
+    hideInputError(settings, formElement, inputElement);
   }
 }; 
 
@@ -162,42 +162,49 @@ const hasInvalidInput = (inputList) => {
   })
 }; 
 //переключение кнопки отправки формы
-const toggleButtonState = (inputList, buttonElement) => {
+const toggleButtonState = (settings, inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
-    buttonElement.classList.add('popup__save-button_inactive');
+    buttonElement.classList.add(settings.inactiveButtonClass);
   } else {
     buttonElement.disabled = false;
-    buttonElement.classList.remove('popup__save-button_inactive');
+    buttonElement.classList.remove(settings.inactiveButtonClass);
   }
 }; 
 
 //Вешаем обработчик на конкретную форму
-const setEventListeners = (formElement) => {
+const setEventListeners = (settings, formElement) => {
   // Найдём все поля формы и сделаем из них массив
-  const inputList = Array.from(formElement.querySelectorAll('.popup__text-input'));
+  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
   // Найдём в текущей форме кнопку отправки
-  const buttonElement = formElement.querySelector('.popup__save-button');
+  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      isValid(settings, formElement, inputElement);
+      toggleButtonState(settings, inputList, buttonElement);
     });
   });
-  toggleButtonState(inputList, buttonElement);
+  toggleButtonState(settings, inputList, buttonElement);
 }; 
 
 //Перебираем и вешаем обработчик на все формы документа
-const enableValidation = () => {
-  const formList = Array.from(document.querySelectorAll('.popup__form'));
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((formElement) => {
     // Для каждой формы вызовем функцию setEventListeners, передав ей элемент формы
-    setEventListeners(formElement);
+    setEventListeners(settings, formElement);
   });
 };
 
 // Вызовем функцию навешивающую обработчик на формы
-enableValidation(); 
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__text-input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__text-input_type_error',
+  errorClass: 'popup__span-error_active'
+}); 
 
 /* Отрисовка дефолтных карточек из массива*/
 initialCards.forEach(function (item) {
