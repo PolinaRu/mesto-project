@@ -1,6 +1,8 @@
-import enableValidation from './validate.js';
-import {initialCards, addElement} from './card.js';
-import {openPopup, closePopup, submitEditProfileForm, submitAddCardForm, formProfile, formAddCard} from './modal.js';
+import './pages/index.css';
+
+import enableValidation from './components/validate.js';
+import {initialCards, addElement} from './components/card.js';
+import {openPopup, closePopup, submitEditProfileForm, submitAddCardForm, formProfile, formAddCard} from './components/modal.js';
 
 const closeButtonEdit = document.querySelector("#closeEdit");
 const closeButtonAdd = document.querySelector("#closeAddEl");
@@ -21,10 +23,6 @@ document.addEventListener( 'click', (evt) => {
   if ((openPopup !== null) && (openPopup == evt.target)){ 
     closePopup(openPopup);
   }
- 
-	/*if ( ! withinBoundaries ) {
-		div.style.display = 'none'; // скрываем элемент т к клик был за его пределами
-	}*/
 })
 
 
@@ -42,7 +40,7 @@ enableValidation({
   errorClass: 'popup__span-error_active'
 }); 
 
-/* Отрисовка дефолтных карточек из массива*/
+// Отрисовка дефолтных карточек из массива
 initialCards.forEach(function (item) {
   addElement(item.name, item.link);
 });

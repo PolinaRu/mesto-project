@@ -4,13 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Mesto</title>
   </head>
   <body class="root">
     <header class="header">
       <div
-        style="background-image: url(./image/logo.svg)"
         alt="Mesto Russia."
         class="header__logo"
       ></div>
@@ -18,7 +16,6 @@
     <main class="main">
       <section class="profile">
         <div
-          style="background-image: url(./image/avatar.jpg)"
           alt="Фото профиля."
           class="profile__avatar"
         ></div>
@@ -90,6 +87,8 @@
           <input
             type="text"
             class="popup__text-input"
+            pattern="https?:\/\/\S+"
+            data-error-message="Введите адрес сайта."
             id="linkAva"
             name="form-linkAva"
             placeholder="Ссылка на картинку"
@@ -128,6 +127,8 @@
             id="linkEl"
             name="form-linkEl"
             placeholder="Ссылка на картинку"
+            pattern="^https?:\/\/\S+"
+            data-error-message="Введите адрес сайта."
             required
           />
           <span class="linkEl-error popup__span-error"></span>
@@ -162,7 +163,5 @@
         </div>
       </article>
     </template>
-
-    <script type="module" src="./components/index.js"></script>
   </body>
 </html>
