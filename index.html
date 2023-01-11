@@ -9,61 +9,159 @@
   </head>
   <body class="root">
     <header class="header">
-      <div style="background-image: url(./image/logo.svg);" alt="Mesto Russia." class="header__logo"></div>
+      <div
+        style="background-image: url(./image/logo.svg)"
+        alt="Mesto Russia."
+        class="header__logo"
+      ></div>
     </header>
     <main class="main">
       <section class="profile">
-        <div style="background-image: url(./image/avatar.jpg);" alt="Фото профиля." class="profile__avatar"></div>
+        <div
+          style="background-image: url(./image/avatar.jpg)"
+          alt="Фото профиля."
+          class="profile__avatar"
+        ></div>
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit" type="button" aria-label="редактировать профиль.">
-          </button>
+          <button
+            class="profile__edit"
+            type="button"
+            aria-label="редактировать профиль."
+          ></button>
           <p class="profile__about">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" type="button" aria-label="добавить Место."></button>
+        <button
+          class="profile__add-button"
+          type="button"
+          aria-label="добавить Место."
+        ></button>
       </section>
       <section class="elements"></section>
     </main>
     <footer>
-      <p class="footer">&copy; 2020 Mesto Russia</p></footer>
+      <p class="footer">&copy; 2020 Mesto Russia</p>
+    </footer>
     <div class="popup" id="edit-Profile">
       <div class="popup__container">
-      <form class="popup__form" action="#" method="POST"  id="form-Profile">
-        <h2 class="popup__caption">Редактировать профиль</h2>
-        <input type="text" class="popup__text-input" id="name" name="form-name" placeholder="Имя" />
-        <input type="text" class="popup__text-input" id="about" name="form-about" placeholder="О себе" />
-        <button type="submit" class="popup__save-button" id="form-saveProf">Сохранить</button>
-      </form>      
-      <button class="popup__close-button" type="button" id="closeEdit"></button>
+        <form class="popup__form" action="#" method="POST" id="form-Profile" novalidate>
+          <h2 class="popup__caption">Редактировать профиль</h2>
+          <input
+            type="text"
+            pattern="^[А-яA-z\-\s]+$"
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+            class="popup__text-input"
+            id="name"
+            name="form-name"
+            placeholder="Имя"
+            minlength="2" 
+            maxlength="40"
+            required
+          />
+          <span class="name-error popup__span-error"></span>
+          <input
+            type="text"
+            class="popup__text-input"              
+            pattern="^[А-яA-z\-\s]+$"        
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+            id="about"
+            name="form-about"
+            placeholder="О себе"
+            minlength="2" 
+            maxlength="200"
+            required
+          />
+          <span class="about-error popup__span-error"></span>
+          <button type="submit" class="popup__save-button" id="form-saveProf">
+            Сохранить
+          </button>
+        </form>
+        <button
+          class="popup__close-button"
+          type="button"
+          id="closeEdit"
+        ></button>
+      </div>
     </div>
+    <div class="popup" id="edit-Avatar">
+      <div class="popup__container">
+        <form class="popup__form" action="#" method="POST" id="form-Avatar" novalidate>
+          <h2 class="popup__caption">Обновить аватар</h2>
+          <input
+            type="text"
+            class="popup__text-input"
+            id="linkAva"
+            name="form-linkAva"
+            placeholder="Ссылка на картинку"
+          />
+          <button type="submit" class="popup__save-button" id="form-saveProf">
+            Сохранить
+          </button>
+        </form>
+        <button
+          class="popup__close-button"
+          type="button"
+          id="closeAvatar"
+        ></button>
+      </div>
     </div>
     <div class="popup" id="add-Element">
       <div class="popup__container">
-      <form class="popup__form" action="#" method="POST" id="form-Element">
-        <h2 class="popup__caption">Новое место</h2>
-        <input type="text" class="popup__text-input" id="nameEl" name="form-nameEl" placeholder="Название" />
-        <input type="text" class="popup__text-input" id="linkEl" name="form-linkEl" placeholder="Ссылка на картинку" />
-        <button type="submit" class="popup__save-button" id="form-saveEl">Создать</button>
-      </form>      
-      <button class="popup__close-button" type="button" id="closeAddEl"></button>
-    </div>
+        <form class="popup__form" action="#" method="POST" id="form-Element" novalidate>
+          <h2 class="popup__caption">Новое место</h2>
+          <input
+            type="text"
+            class="popup__text-input"
+            id="nameEl"
+            name="form-nameEl"
+            placeholder="Название"
+            minlength="2" 
+            maxlength="30"              
+            pattern="^[А-яA-z\-\s]+$"        
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+            required
+          />
+          <span class="nameEl-error popup__span-error"></span>
+          <input
+            type="text"
+            class="popup__text-input"
+            id="linkEl"
+            name="form-linkEl"
+            placeholder="Ссылка на картинку"
+            required
+          />
+          <span class="linkEl-error popup__span-error"></span>
+          <button type="submit" class="popup__save-button" id="form-saveEl">
+            Создать
+          </button>
+        </form>
+        <button
+          class="popup__close-button"
+          type="button"
+          id="closeAddEl"
+        ></button>
+      </div>
     </div>
     <div class="popup img-popup">
-      <button class="popup__close-button img-popup__close-button" type="button" id="closeImg"></button>
+      <button
+        class="popup__close-button img-popup__close-button"
+        type="button"
+        id="closeImg"
+      ></button>
       <div class="img-popup__background"></div>
       <p class="img-popup__name"></p>
     </div>
 
-  <template id="card-template">
-    <article class="element">
-      <div class="element__image"></div>
-      <button class="element__drop" type="button"></button>
-      <div class="element__text">
-        <h2 class="element__name"></h2>
-        <button class="element__like" type="button"></button>
-      </div>
-    </article>
-  </template>
+    <template id="card-template">
+      <article class="element">
+        <div class="element__image"></div>
+        <button class="element__drop" type="button"></button>
+        <div class="element__text">
+          <h2 class="element__name"></h2>
+          <button class="element__like" type="button"></button>
+        </div>
+      </article>
+    </template>
 
     <script src="./src/constants.js"></script>
     <script src="./src/index.js"></script>

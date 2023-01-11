@@ -34,12 +34,27 @@ profileEditButton.addEventListener("click", function () {
   openPopup(profileEdit);
 });
 
+document.addEventListener("keydown", function(evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector(".popup_opend")); 
+  }
+})
+document.addEventListener( 'click', (evt) => {
+	const openPopup = document.querySelector(".popup_opend");
+
+  if ((openPopup !== null) && (openPopup == evt.target)){ 
+    closePopup(openPopup);
+  }
+ 
+	/*if ( ! withinBoundaries ) {
+		div.style.display = 'none'; // скрываем элемент т к клик был за его пределами
+	}*/
+})
+
 profileAddButton.addEventListener("click", () => { openPopup(newElementAdd)});
 
 closeButtonEdit.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
-
 closeButtonAdd.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
-
 closeButtonImg.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
 
 function openPopup(popup) {
@@ -92,7 +107,6 @@ function createCard(nameEl, linkEl) {
     });
   cardElement.querySelector(".element__drop").addEventListener("click", function (evt) {
       evt.target.closest(".element").remove();
-      /*Тут, возможно, надо удалить объект из массива*/
     });
     elementImg.addEventListener("click", function (evt) {
     openPopupImg(evt.target.closest(".element").querySelector(".element__name").textContent, evt.target.style.backgroundImage);
@@ -108,6 +122,82 @@ function addCard(cardElement) {
 function addElement(nameEl, linkEl) {
   addCard(createCard(nameEl, linkEl));
 }
+
+//Отрисовываем текст ошибки и подсветку, span ошибки находим через id соответствующего input
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__text-input_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('popup__span-error_active');
+};
+
+//аналогично скрываем ошибку
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__text-input_type_error');
+  errorElement.classList.remove('popup__span-error_active');
+  errorElement.textContent = '';
+}; 
+
+//Проверка валидности конкретного поля в форме
+const isValid = (formElement, inputElement) => {
+  //если это не влезло в регулярку
+  if (inputElement.validity.patternMismatch) {
+      inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  } else {
+    inputElement.setCustomValidity("");
+  }
+
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}; 
+
+//проверка валидности всех полей
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  })
+}; 
+//переключение кнопки отправки формы
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.disabled = true;
+    buttonElement.classList.add('popup__save-button_inactive');
+  } else {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove('popup__save-button_inactive');
+  }
+}; 
+
+//Вешаем обработчик на конкретную форму
+const setEventListeners = (formElement) => {
+  // Найдём все поля формы и сделаем из них массив
+  const inputList = Array.from(formElement.querySelectorAll('.popup__text-input'));
+  // Найдём в текущей форме кнопку отправки
+  const buttonElement = formElement.querySelector('.popup__save-button');
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      isValid(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+  toggleButtonState(inputList, buttonElement);
+}; 
+
+//Перебираем и вешаем обработчик на все формы документа
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach((formElement) => {
+    // Для каждой формы вызовем функцию setEventListeners, передав ей элемент формы
+    setEventListeners(formElement);
+  });
+};
+
+// Вызовем функцию навешивающую обработчик на формы
+enableValidation(); 
 
 /* Отрисовка дефолтных карточек из массива*/
 initialCards.forEach(function (item) {
