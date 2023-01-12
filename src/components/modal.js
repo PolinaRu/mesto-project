@@ -31,12 +31,6 @@ function closeOnEnotherclick (evt){
 }
 
 export function openPopup(popup) {
-  //вот тут сбросить ошибки валидации
-  const errorSpanList = Array.from(popup.querySelectorAll('.popup__span-error'));
-  errorSpanList.forEach((inputElement) => {
-    inputElement.textContent = '';
-  });
-
   popup.classList.add("popup_opend");
   //включить слушатели
   document.addEventListener("keydown", closeOnEsc);
@@ -44,9 +38,6 @@ export function openPopup(popup) {
 };
 
 export function closePopup(popup) {
-  Array.from(document.forms).forEach((form) => {
-    form.reset();
-  })
   popup.classList.remove("popup_opend");
   //выключить слушатели
   document.removeEventListener("keydown", closeOnEsc);
@@ -71,10 +62,6 @@ export function submitAddCardForm(evt) {
   addElement(nameEl, linkEl);
 
   closePopup(newElementAdd);
-
-  //без пробрасывания настроечного объекта только задизейблить
-  /*formAddCardButton.classList.add(settings.inactiveButtonClass);*/
-  formAddCardButton.disabled = true;
 };
 
 profileEditButton.addEventListener("click", function () {

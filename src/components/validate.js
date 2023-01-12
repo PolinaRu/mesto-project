@@ -47,6 +47,14 @@ const toggleButtonState = (settings, inputList, buttonElement) => {
   }
 }; 
 
+//очистка сообщений ошибки валидации
+const removeValidationErrors = (settings, formElement) => {
+  const errorSpanList = Array.from(formElement.querySelectorAll(settings.errorSpan));
+  errorSpanList.forEach((inputElement) => {
+    inputElement.textContent = '';
+  });
+}
+
 //Вешаем обработчик на конкретную форму
 const setEventListeners = (settings, formElement) => {
   // Найдём все поля формы и сделаем из них массив
@@ -58,6 +66,14 @@ const setEventListeners = (settings, formElement) => {
       isValid(settings, formElement, inputElement);
       toggleButtonState(settings, inputList, buttonElement);
     });
+  });
+  formElement.addEventListener('submit', () =>{
+    //при отправке формы очистим сообщения об ошибке, чекнем кнопку и очистим поля ввода
+    removeValidationErrors(settings, formElement);
+    inputList.forEach((inputElement) => {
+      inputElement.value = '';
+    });
+    toggleButtonState(settings, inputList, buttonElement);
   });
   toggleButtonState(settings, inputList, buttonElement);
 }; 

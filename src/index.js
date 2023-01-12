@@ -11,7 +11,8 @@ const validationConfig = {
   submitButtonSelector: '.popup__save-button',
   inactiveButtonClass: 'popup__save-button_disabled',
   inputErrorClass: 'popup__text-input_type_error',
-  errorClass: 'popup__span-error_active'
+  errorClass: 'popup__span-error_active',
+  errorSpan: '.popup__span-error'
 };
 
 const closeButtonEdit = document.querySelector("#closeEdit");
