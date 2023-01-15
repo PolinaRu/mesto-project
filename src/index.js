@@ -1,6 +1,6 @@
 import './components/index.css';
 
-import {getCards, getUser, saveAvatar, saveUsername, saveNewCard, dropCard} from './components/api.js';
+import {getCards, getUser, saveAvatar, saveUsername, saveNewCard} from './components/api.js';
 import enableValidation from './components/validate.js';
 import {addElement} from './components/card.js';
 import {closePopup, submitEditProfileForm, submitAddCardForm,

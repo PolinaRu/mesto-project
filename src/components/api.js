@@ -45,6 +45,7 @@ return fetch(`https://nomoreparties.co/v1/${user.login}/users/me`, {
 }); 
 };
 
+//добавление новой карточки
 export function saveNewCard (user, card) {
   return fetch(`https://nomoreparties.co/v1/${user.login}/cards`, {
     method: 'POST',
@@ -57,11 +58,15 @@ export function saveNewCard (user, card) {
       link: card.link
     })
   })
-  .then((res) => {
-    return res.json();
-  }); 
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 };
 
+//удаление карточки
 export function dropCard (user, card) {
   return fetch(`https://nomoreparties.co/v1/${user.login}/cards/${card._id}`, {
     method: 'DELETE',
@@ -71,3 +76,36 @@ export function dropCard (user, card) {
     }
   })
 }
+
+//постановка лайков. для отрисовки брать количество лайков из ответа сервера!!!
+export function sendLike (user, card) {
+  return fetch(`https://nomoreparties.co/v1/${user.login}/cards/likes/${card._id}`, {
+    method: 'PUT',
+    headers: {
+      authorization: user.token,
+      'Content-Type': 'application/json'
+    },
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+};
+
+export function sendDislike (user, card) {
+  return fetch(`https://nomoreparties.co/v1/${user.login}/cards/likes/${card._id}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: user.token,
+      'Content-Type': 'application/json'
+    },
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+};
