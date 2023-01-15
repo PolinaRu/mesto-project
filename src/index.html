@@ -20,13 +20,13 @@
           class="profile__avatar"
         ></div>
         <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button
             class="profile__edit"
             type="button"
             aria-label="редактировать профиль."
           ></button>
-          <p class="profile__about">Исследователь океана</p>
+          <p class="profile__about"></p>
         </div>
         <button
           class="profile__add-button"
@@ -59,7 +59,7 @@
           <input
             type="text"
             class="popup__text-input"              
-            pattern="^[А-яA-z\-\s]+$"        
+            pattern="^[А-яA-z\-\s,]+$"        
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             id="about"
             name="form-about"
@@ -103,7 +103,22 @@
           id="closeAvatar"
         ></button>
       </div>
-    </div>
+    </div>    
+    <!--<div class="popup" id="delete-Element">
+      <div class="popup__container">
+        <form class="popup__form" action="#" method="DELETE" id="form-delElement" novalidate>
+          <h2 class="popup__caption">Вы уверены?</h2>
+          <button type="submit" class="popup__save-button popup__save-button_delete-card" id="form-delEl">
+            Да
+          </button>
+        </form>
+        <button
+          class="popup__close-button"
+          type="button"
+          id="closeDelete"
+        ></button>
+      </div>
+    </div>-->
     <div class="popup" id="add-Element">
       <div class="popup__container">
         <form class="popup__form" action="#" method="POST" id="form-Element" novalidate>
@@ -159,7 +174,10 @@
         <button class="element__drop" type="button"></button>
         <div class="element__text">
           <h2 class="element__name"></h2>
-          <button class="element__like" type="button"></button>
+          <div class="element__like-container">
+            <button class="element__like" type="button"></button>
+            <span class="element__likes-count"></span>
+          </div>
         </div>
       </article>
     </template>

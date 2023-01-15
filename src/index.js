@@ -1,9 +1,18 @@
 import './components/index.css';
-import {initialCards} from './components/initCards.js';
 
+import {getCards, getUser, saveAvatar, saveUsername, saveNewCard, dropCard} from './components/api.js';
 import enableValidation from './components/validate.js';
 import {addElement} from './components/card.js';
-import {closePopup, submitEditProfileForm, submitAddCardForm, formProfile, formAddCard} from './components/modal.js';
+import {closePopup, submitEditProfileForm, submitAddCardForm,
+       formProfile, formAddCard, 
+       profileAbout, profileName, profileAvatar,
+       newElementName, newElementLink} from './components/modal.js';
+
+const user = {
+  token: '5b45f221-72d7-4784-b785-08afdc8a8197',
+  login: 'plus-cohort-18',
+  _id: '88e2836e45d124ad63e77fa5'
+};
 
 const validationConfig = {
   formSelector: '.popup__form',
@@ -18,18 +27,48 @@ const validationConfig = {
 const closeButtonEdit = document.querySelector("#closeEdit");
 const closeButtonAdd = document.querySelector("#closeAddEl");
 const closeButtonImg = document.querySelector("#closeImg");
+//const closeButtonDel = document.querySelector("#closeDelete");
 
-formProfile.addEventListener("submit", submitEditProfileForm);
-formAddCard.addEventListener("submit", submitAddCardForm);
+formProfile.addEventListener("submit", (evt) => {
+  submitEditProfileForm(evt);
+  saveUsername(user, {name: profileName.textContent, about: profileAbout.textContent})
+});
+formAddCard.addEventListener("submit", (evt) => {
+  saveNewCard(user, {name: newElementName.value, link: newElementLink.value})
+    .then((res) => {
+      addElement(user, res);
+    });
+  submitAddCardForm(evt);
+});
 
 closeButtonEdit.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
 closeButtonAdd.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
 closeButtonImg.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
+//closeButtonDel.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
 
 // Вызовем функцию навешивающую обработчик на формы
 enableValidation(validationConfig); 
 
-// Отрисовка дефолтных карточек из массива
-initialCards.forEach(function (item) {
-  addElement(item.name, item.link);
-});
+// Отрисовка карточек из общего массива с сервера
+getCards(user)
+  .then((res) => {
+    res.forEach(function (item) {
+      addElement(user, item); console.log(item);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+//Отрисовка пользователя по токену
+getUser(user)
+  .then((res) => {
+    profileName.textContent = res.name;
+    profileAbout.textContent = res.about;
+    profileAvatar.setAttribute('style', `background-image: url(${res.avatar});`);
+
+    console.log(res);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
