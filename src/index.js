@@ -1,10 +1,9 @@
-import './components/index.css';
+import './styles/index.css';
 
 import {getCards, getUser, saveAvatar, saveUsername, saveNewCard} from './components/api.js';
 import enableValidation from './components/validate.js';
 import {addElement} from './components/card.js';
-import {closePopup, submitEditProfileForm, submitAddCardForm,
-       formProfile, formAddCard, 
+import {closePopup, submitEditProfileForm, submitAddCardForm, submitEditAvatarForm,
        profileAbout, profileName, profileAvatar,
        newElementName, newElementLink} from './components/modal.js';
 
@@ -29,6 +28,10 @@ const closeButtonAdd = document.querySelector("#closeAddEl");
 const closeButtonImg = document.querySelector("#closeImg");
 //const closeButtonDel = document.querySelector("#closeDelete");
 
+const formProfile = document.querySelector("#form-Profile");
+const formAddCard = document.querySelector("#form-Element");
+const formEditAvatar = document.querySelector("#form-Avatar");
+
 formProfile.addEventListener("submit", (evt) => {
   submitEditProfileForm(evt);
   saveUsername(user, {name: profileName.textContent, about: profileAbout.textContent})
@@ -39,6 +42,10 @@ formAddCard.addEventListener("submit", (evt) => {
       addElement(user, res);
     });
   submitAddCardForm(evt);
+});
+formEditAvatar.addEventListener("submit", (evt) => {
+  submitEditAvatarForm(evt);
+  
 });
 
 closeButtonEdit.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});

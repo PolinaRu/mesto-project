@@ -6,14 +6,12 @@ export const profileName = document.querySelector(".profile__name");
 export const profileAbout = document.querySelector(".profile__about");
 export const profileAvatar = document.querySelector(".profile__avatar");
 const profileEdit = document.querySelector("#edit-Profile");
+const profileEditAvatar = document.querySelector("#edit-Avatar");
 const profileEditName = document.querySelector("#name");
 const profileEditAbout = document.querySelector("#about");
+const profileEditAvatarLink = document.querySelector("#linkAva");
 const profileEditButton = document.querySelector(".profile__edit");
 const profileAddButton = document.querySelector(".profile__add-button");
-
-export const formProfile = document.querySelector("#form-Profile");
-export const formAddCard = document.querySelector("#form-Element");
-/*const formAddCardButton = document.querySelector("#form-saveEl");*/
 
 function closeOnEsc (evt) {
   if (evt.key === 'Escape') {
@@ -56,6 +54,13 @@ export function submitAddCardForm(evt) {
   closePopup(newElementAdd);
 };
 
+export function submitEditAvatarForm(evt) {
+  evt.preventDefault();
+  profileAvatar.setAttribute('style', `background-image: url(${profileEditAvatarLink.value});`);
+
+  closePopup(profileEditAvatar);
+};
+
 profileEditButton.addEventListener("click", function () {
   profileEditName.value = profileName.textContent;
   profileEditAbout.value = profileAbout.textContent;
@@ -63,3 +68,4 @@ profileEditButton.addEventListener("click", function () {
 });
 
 profileAddButton.addEventListener("click", () => { openPopup(newElementAdd)});
+profileAvatar.addEventListener("click", () => { openPopup(profileEditAvatar)});
