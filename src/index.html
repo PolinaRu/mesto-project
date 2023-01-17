@@ -8,17 +8,11 @@
   </head>
   <body class="root">
     <header class="header">
-      <div
-        alt="Mesto Russia."
-        class="header__logo"
-      ></div>
+      <div alt="Mesto Russia." class="header__logo"></div>
     </header>
     <main class="main">
       <section class="profile">
-        <div
-          alt="Фото профиля."
-          class="profile__avatar"
-        ></div>
+        <div alt="Фото профиля." class="profile__avatar"></div>
         <div class="profile__info">
           <h1 class="profile__name"></h1>
           <button
@@ -41,7 +35,13 @@
     </footer>
     <div class="popup" id="edit-Profile">
       <div class="popup__container">
-        <form class="popup__form" action="#" method="POST" id="form-Profile" novalidate>
+        <form
+          class="popup__form"
+          action="#"
+          method="POST"
+          id="form-Profile"
+          novalidate
+        >
           <h2 class="popup__caption">Редактировать профиль</h2>
           <input
             type="text"
@@ -51,20 +51,20 @@
             id="name"
             name="form-name"
             placeholder="Имя"
-            minlength="2" 
+            minlength="2"
             maxlength="40"
             required
           />
           <span class="name-error popup__span-error"></span>
           <input
             type="text"
-            class="popup__text-input"              
-            pattern="^[А-яA-z\-\s,]+$"        
+            class="popup__text-input"
+            pattern="^[А-яA-z\-\s,]+$"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             id="about"
             name="form-about"
             placeholder="О себе"
-            minlength="2" 
+            minlength="2"
             maxlength="200"
             required
           />
@@ -82,7 +82,13 @@
     </div>
     <div class="popup" id="edit-Avatar">
       <div class="popup__container">
-        <form class="popup__form" action="#" method="POST" id="form-Avatar" novalidate>
+        <form
+          class="popup__form"
+          action="#"
+          method="POST"
+          id="form-Avatar"
+          novalidate
+        >
           <h2 class="popup__caption">Обновить аватар</h2>
           <input
             type="text"
@@ -105,7 +111,7 @@
           id="closeAvatar"
         ></button>
       </div>
-    </div>    
+    </div>
     <!--<div class="popup" id="delete-Element">
       <div class="popup__container">
         <form class="popup__form" action="#" method="DELETE" id="form-delElement" novalidate>
@@ -123,7 +129,13 @@
     </div>-->
     <div class="popup" id="add-Element">
       <div class="popup__container">
-        <form class="popup__form" action="#" method="POST" id="form-Element" novalidate>
+        <form
+          class="popup__form"
+          action="#"
+          method="POST"
+          id="form-Element"
+          novalidate
+        >
           <h2 class="popup__caption">Новое место</h2>
           <input
             type="text"
@@ -131,9 +143,9 @@
             id="nameEl"
             name="form-nameEl"
             placeholder="Название"
-            minlength="2" 
-            maxlength="30"              
-            pattern="^[А-яA-z\-\s]+$"        
+            minlength="2"
+            maxlength="30"
+            pattern="^[А-яA-z\-\s]+$"
             data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
             required
           />

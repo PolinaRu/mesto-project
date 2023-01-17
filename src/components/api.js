@@ -1,108 +1,80 @@
-import {user, checkResponse} from './../utils/constants.js'
+import { user, checkResponse } from "./../utils/constants.js";
 
 const config = {
   baseUrl: `https://nomoreparties.co/v1/${user.login}`,
   headers: {
-    authorization: '5b45f221-72d7-4784-b785-08afdc8a8197',
-    'Content-Type': 'application/json',
+    authorization: "5b45f221-72d7-4784-b785-08afdc8a8197",
+    "Content-Type": "application/json",
   },
 };
 
 //получение начального массива карточек с сервера
-export function getCards () {
+export function getCards() {
   return fetch(`${config.baseUrl}/cards`, {
-  headers: {
-    authorization: user.token
-  }
-})
-.then(checkResponse);
+    headers: config.headers,
+  }).then(checkResponse);
 }
 
 //загрузка пользователя
-export function getUser () {
+export function getUser() {
   return fetch(`${config.baseUrl}/users/me`, {
-    headers: {
-      authorization: user.token
-    }
-  })
-  .then(checkResponse);
-};
+    headers: config.headers,
+  }).then(checkResponse);
+}
 
-export function saveAvatar (obj) {
+export function saveAvatar(obj) {
   return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: 'PATCH',
-    headers: {
-      authorization: user.token,
-      'Content-Type': 'application/json'
-    },
+    method: "PATCH",
+    headers: config.headers,
     body: JSON.stringify({
       avatar: obj.link,
-    })
-  }).then(checkResponse);; 
-};
+    }),
+  }).then(checkResponse);
+}
 
 //отправка имени и инфы пользователя на сервер
-export function saveUsername (info) {
+export function saveUsername(info) {
   return fetch(`${config.baseUrl}/users/me`, {
-    method: 'PATCH',
-    headers: {
-      authorization: user.token,
-      'Content-Type': 'application/json'
-    },
+    method: "PATCH",
+    headers: config.headers,
     body: JSON.stringify({
       name: info.name,
-      about: info.about
-    })
-  }).then(checkResponse); 
-};
+      about: info.about,
+    }),
+  }).then(checkResponse);
+}
 
 //добавление новой карточки
-export function saveNewCard (card) {
+export function saveNewCard(card) {
   return fetch(`${config.baseUrl}/cards`, {
-    method: 'POST',
-    headers: {
-      authorization: user.token,
-      'Content-Type': 'application/json'
-    },
+    method: "POST",
+    headers: config.headers,
     body: JSON.stringify({
       name: card.name,
-      link: card.link
-    })
-  })
-  .then(checkResponse);
-};
+      link: card.link,
+    }),
+  }).then(checkResponse);
+}
 
 //удаление карточки
-export function dropCard (card) {
+export function dropCard(card) {
   return fetch(`${config.baseUrl}/cards/${card._id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: user.token,
-      'Content-Type': 'application/json'
-    }
-  })
-  .then(checkResponse);
+    method: "DELETE",
+    headers: config.headers,
+  }).then(checkResponse);
 }
 
 //постановка лайков. для отрисовки брать количество лайков из ответа сервера!!!
-export function sendLike (card) {
+export function sendLike(card) {
   return fetch(`${config.baseUrl}/cards/likes/${card._id}`, {
-    method: 'PUT',
-    headers: {
-      authorization: user.token,
-      'Content-Type': 'application/json'
-    },
-  })
-  .then(checkResponse);
-};
+    method: "PUT",
+    headers: config.headers,
+  }).then(checkResponse);
+}
 
-export function sendDislike (card) {
+export function sendDislike(card) {
   return fetch(`${config.baseUrl}/cards/likes/${card._id}`, {
-    method: 'DELETE',
-    headers: {
-      authorization: user.token,
-      'Content-Type': 'application/json'
-    },
-  })
-  .then(checkResponse);
-};
+    method: "DELETE",
+    headers: config.headers,
+  }).then(checkResponse);
+}

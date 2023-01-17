@@ -13,13 +13,13 @@ export const profileEditAvatarLink = document.querySelector("#linkAva");
 const profileEditButton = document.querySelector(".profile__edit");
 const profileAddButton = document.querySelector(".profile__add-button");
 
-function closeOnEsc (evt) {
-  if (evt.key === 'Escape') {
-    closePopup(document.querySelector(".popup_opend")); 
+function closeOnEsc(evt) {
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector(".popup_opend"));
   }
-};
-function handleOverlay (evt){
-  if (evt.target.classList.contains('popup_opend')){ 
+}
+function handleOverlay(evt) {
+  if (evt.target.classList.contains("popup_opend")) {
     closePopup(evt.target);
   }
 }
@@ -29,21 +29,26 @@ export function openPopup(popup) {
   //включить слушатели
   document.addEventListener("keydown", closeOnEsc);
   document.addEventListener("mousedown", handleOverlay);
-};
+}
 
 export function closePopup(popup) {
   popup.classList.remove("popup_opend");
   //выключить слушатели
   document.removeEventListener("keydown", closeOnEsc);
   document.removeEventListener("mousedown", handleOverlay);
-};
+}
 
 //смена текста на кнопке при загрузке
-function renderLoading(isLoading, button, buttonText='Сохранить', loadingText='Сохранение...') {
+function renderLoading(
+  isLoading,
+  button,
+  buttonText = "Сохранить",
+  loadingText = "Сохранение..."
+) {
   if (isLoading) {
-    button.textContent = loadingText
+    button.textContent = loadingText;
   } else {
-    button.textContent = buttonText
+    button.textContent = buttonText;
   }
 }
 
@@ -60,7 +65,7 @@ export function handleSubmit(request, evt, loadingText = "Сохранение..
       evt.target.reset();
     })
     .catch((err) => {
-      console.error(`Ошибка: ${err}`);
+      console.error(err);
     })
     .finally(() => {
       renderLoading(false, submitButton, initialText);
@@ -69,7 +74,7 @@ export function handleSubmit(request, evt, loadingText = "Сохранение..
 
 export function submitAddCardForm() {
   closePopup(newElementAdd);
-};
+}
 
 profileEditButton.addEventListener("click", function () {
   profileEditName.value = profileName.textContent;
@@ -77,5 +82,9 @@ profileEditButton.addEventListener("click", function () {
   openPopup(profileEdit);
 });
 
-profileAddButton.addEventListener("click", () => { openPopup(newElementAdd)});
-profileAvatar.addEventListener("click", () => { openPopup(profileEditAvatar)});
+profileAddButton.addEventListener("click", () => {
+  openPopup(newElementAdd);
+});
+profileAvatar.addEventListener("click", () => {
+  openPopup(profileEditAvatar);
+});
