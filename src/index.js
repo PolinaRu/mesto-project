@@ -1,81 +1,86 @@
 import './styles/index.css';
+import {validationConfig} from './utils/constants.js';
 
 import {getCards, getUser, saveAvatar, saveUsername, saveNewCard} from './components/api.js';
 import enableValidation from './components/validate.js';
 import {addElement} from './components/card.js';
-import {closePopup, submitEditProfileForm, submitAddCardForm, submitEditAvatarForm,
-       profileAbout, profileName, profileAvatar,
+import {closePopup, handleSubmit,
+       profileEditAbout, profileEditName, profileEditAvatarLink,
+       profileEdit, profileEditAvatar, newElementAdd,
+       profileName, profileAvatar, profileAbout,
        newElementName, newElementLink} from './components/modal.js';
 
-const user = {
-  token: '5b45f221-72d7-4784-b785-08afdc8a8197',
-  login: 'plus-cohort-18',
-  _id: '88e2836e45d124ad63e77fa5'
-};
+export let userId;
 
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__text-input',
-  submitButtonSelector: '.popup__save-button',
-  inactiveButtonClass: 'popup__save-button_disabled',
-  inputErrorClass: 'popup__text-input_type_error',
-  errorClass: 'popup__span-error_active',
-  errorSpan: '.popup__span-error'
-};
+//тут достаются формы по именам
+const formProfile = document.forms['form-Profile'];
+const formAddCard = document.forms['form-Element'];
+const formEditAvatar = document.forms['form-Avatar'];
 
-const closeButtonEdit = document.querySelector("#closeEdit");
-const closeButtonAdd = document.querySelector("#closeAddEl");
-const closeButtonImg = document.querySelector("#closeImg");
-//const closeButtonDel = document.querySelector("#closeDelete");
-
-const formProfile = document.querySelector("#form-Profile");
-const formAddCard = document.querySelector("#form-Element");
-const formEditAvatar = document.querySelector("#form-Avatar");
-
-formProfile.addEventListener("submit", (evt) => {
-  submitEditProfileForm(evt);
-  saveUsername(user, {name: profileName.textContent, about: profileAbout.textContent})
+// находим все кнопки закрытия модалок по универсальному селектору
+const closeButtons = document.querySelectorAll('.popup__close-button');
+// устанавливаем обработчик закрытия на крестик
+closeButtons.forEach((button) => {
+  const popup = button.closest('.popup');
+  button.addEventListener("click", () => closePopup(popup));
 });
-formAddCard.addEventListener("submit", (evt) => {
-  saveNewCard(user, {name: newElementName.value, link: newElementLink.value})
-    .then((res) => {
-      addElement(user, res);
+
+//обработчик сабмита формы редактирования профиля
+function handleSubmitProfileForm(evt) {
+  function makeRequest() {
+    return saveUsername({name: profileEditName.value, about: profileEditAbout.value})
+      .then((userData) => {
+      profileName.textContent = userData.name;
+      profileAbout.textContent = userData.about;
+      closePopup(profileEdit);
     });
-  submitAddCardForm(evt);
-});
-formEditAvatar.addEventListener("submit", (evt) => {
-  submitEditAvatarForm(evt);
-  
-});
+  }  
+  handleSubmit(makeRequest, evt);
+}
+//обработчик сабмита формы смены аватара
+function handleSubmitAvatarForm(evt) {
+  function makeRequest() {
+    return saveAvatar({link: profileEditAvatarLink.value})
+      .then((userData) => {
+        profileAvatar.setAttribute('style', `background-image: url(${userData.avatar});`);
+        closePopup(profileEditAvatar);
+    });
+  }  
+  handleSubmit(makeRequest, evt);
+}
+//обработчик сабмита формы добавления карточки
+function handleSubmitNewCardForm(evt) {
+  function makeRequest() {
+    return saveNewCard({name: newElementName.value, link: newElementLink.value})
+      .then((userData) => {
+        addElement(userData);
+        closePopup(newElementAdd);
+    });
+  }  
+  handleSubmit(makeRequest, evt);
+}
 
-closeButtonEdit.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
-closeButtonAdd.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
-closeButtonImg.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
-//closeButtonDel.addEventListener("click", (evt) => {closePopup(evt.target.closest(".popup"))});
+formProfile.addEventListener("submit", handleSubmitProfileForm);
+formEditAvatar.addEventListener("submit",handleSubmitAvatarForm);
+formAddCard.addEventListener("submit", handleSubmitNewCardForm);
 
-// Вызовем функцию навешивающую обработчик на формы
+// Вызовем функцию навешивающую валидатор на формы
 enableValidation(validationConfig); 
 
-// Отрисовка карточек из общего массива с сервера
-getCards(user)
-  .then((res) => {
-    res.forEach(function (item) {
-      addElement(user, item); console.log(item);
+//загрузка и отрисовка первоначальных данных
+Promise.all([getUser(), getCards()])
+  .then(([userData, cards]) => {
+    console.log(userData);
+    // установка данных пользователя
+    profileName.textContent = userData.name;
+    profileAbout.textContent = userData.about;
+    profileAvatar.setAttribute('style', `background-image: url(${userData.avatar});`);
+    userId = userData._id;
+    //Отрисовка карточек из общего массива с сервера
+    cards.forEach(function (item) {
+      addElement(item); //console.log(item);
     });
   })
-  .catch((err) => {
-    console.error(err);
-  });
-
-//Отрисовка пользователя по токену
-getUser(user)
-  .then((res) => {
-    profileName.textContent = res.name;
-    profileAbout.textContent = res.about;
-    profileAvatar.setAttribute('style', `background-image: url(${res.avatar});`);
-
-    console.log(res);
-  })
-  .catch((err) => {
+  .catch(err => {
     console.error(err);
   });

@@ -67,15 +67,18 @@ const setEventListeners = (settings, formElement) => {
       toggleButtonState(settings, inputList, buttonElement);
     });
   });
-  formElement.addEventListener('submit', () =>{
-    //при отправке формы очистим сообщения об ошибке, чекнем кнопку и очистим поля ввода
-    removeValidationErrors(settings, formElement);
-    inputList.forEach((inputElement) => {
-      inputElement.value = '';
-    });
-    toggleButtonState(settings, inputList, buttonElement);
-  });
+
+  // деактивируем кнопку при 1й загрузке сайта
   toggleButtonState(settings, inputList, buttonElement);
+
+  formElement.addEventListener('reset', () => {
+    removeValidationErrors(settings, formElement);
+    // `setTimeout` нужен для того, чтобы дождаться очищения формы (вызов уйдет в конце стэка)
+    setTimeout(() => {
+     toggleButtonState(settings, inputList, buttonElement);
+    }, 0);
+
+  });
 }; 
 
 //Перебираем и вешаем обработчик на все формы документа

@@ -1,5 +1,6 @@
 import {openPopup} from './modal.js';
 import {dropCard, sendLike, sendDislike} from './api.js';
+import {userId} from '../index.js';
 
 const cardTemplate = document.querySelector("#card-template").content;
 const elements = document.querySelector(".elements");
@@ -18,55 +19,56 @@ function openPopupImg(nameEl, linkEl) {
 }
 
 //переключение лайка
-function toggleLike(user, card, evt){
+function toggleLike(card, evt){
   if (evt.target.classList.contains("element__like_active")) {
     // отправляем дизлайк, отрисовываем новое количество, убираем заливку
-    sendDislike(user, card)
+    sendDislike(card)
       .then((res) => {
         evt.target.nextElementSibling.textContent = res.likes.length;
+        evt.target.classList.remove("element__like_active");
       })
       .catch((err) => {
         console.log(err); // выводим ошибку в консоль
       }); 
-    evt.target.classList.remove("element__like_active");
   } else {
-    sendLike(user, card)
+    sendLike(card)
       .then((res) => {
         evt.target.nextElementSibling.textContent = res.likes.length;
+        evt.target.classList.add("element__like_active");
       })
       .catch((err) => {
         console.log(err); // выводим ошибку в консоль
       }); 
-    evt.target.classList.add("element__like_active");
   }
 }
 
 /* Отрисовка элемента на странице */
-function createCard(user, card) {
+function createCard(card) {
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
   const elementImg = cardElement.querySelector(".element__image");
+  const elementLike = cardElement.querySelector(".element__like");
+  const elementDrop = cardElement.querySelector(".element__drop");
 
   cardElement.querySelector(".element__name").textContent = card.name;
   cardElement.querySelector(".element__likes-count").textContent = card.likes.length;
   elementImg.style.backgroundImage = `url(${card.link})`;
   elementImg.setAttribute('alt', `${card.name}`);
 
-  cardElement.querySelector(".element__like").addEventListener("click", function (evt) {
-    toggleLike(user, card, evt);
+  elementLike.addEventListener("click", function (evt) {
+    toggleLike(card, evt);
     });
 //отрисовываем лайк, если он был
-  if (card.likes.some(item => {return item._id === user._id})) {
-    cardElement.querySelector(".element__like").classList.add("element__like_active");
+  if (card.likes.some(item => {return item._id === userId})) {
+    elementLike.classList.add("element__like_active");
   }
 
   //проверяем рисовать ли корзину
-  if (user._id == card.owner._id) {
-  cardElement.querySelector(".element__drop").addEventListener("click", function (evt) {
-  
-      dropCard(user, card);
-      evt.target.closest(".element").remove();
+  if (userId == card.owner._id) {
+    elementDrop.addEventListener("click", function (evt) {  
+      dropCard(card)
+        .then(() => evt.target.closest(".element").remove());      
     })} else {
-      cardElement.querySelector(".element__drop").style.display = 'none';
+      elementDrop.style.display = 'none';
     };
 
     elementImg.addEventListener("click", function (evt) {
@@ -80,6 +82,6 @@ function addCard(cardElement) {
   elements.prepend(cardElement);
 }
 
-export function addElement(user, cardElement) {
-  addCard(createCard(user, cardElement));
+export function addElement(cardElement) {
+  addCard(createCard(cardElement));
 }

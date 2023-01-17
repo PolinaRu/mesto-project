@@ -1,15 +1,15 @@
-const newElementAdd = document.querySelector("#add-Element");
+export const newElementAdd = document.querySelector("#add-Element");
 export const newElementName = document.querySelector("#nameEl");
 export const newElementLink = document.querySelector("#linkEl");
 
 export const profileName = document.querySelector(".profile__name");
 export const profileAbout = document.querySelector(".profile__about");
 export const profileAvatar = document.querySelector(".profile__avatar");
-const profileEdit = document.querySelector("#edit-Profile");
-const profileEditAvatar = document.querySelector("#edit-Avatar");
-const profileEditName = document.querySelector("#name");
-const profileEditAbout = document.querySelector("#about");
-const profileEditAvatarLink = document.querySelector("#linkAva");
+export const profileEdit = document.querySelector("#edit-Profile");
+export const profileEditAvatar = document.querySelector("#edit-Avatar");
+export const profileEditName = document.querySelector("#name");
+export const profileEditAbout = document.querySelector("#about");
+export const profileEditAvatarLink = document.querySelector("#linkAva");
 const profileEditButton = document.querySelector(".profile__edit");
 const profileAddButton = document.querySelector(".profile__add-button");
 
@@ -18,11 +18,9 @@ function closeOnEsc (evt) {
     closePopup(document.querySelector(".popup_opend")); 
   }
 };
-function closeOnEnotherclick (evt){
-	const openPopup = document.querySelector(".popup_opend");
-
-  if ((openPopup !== null) && (openPopup == evt.target)){ 
-    closePopup(openPopup);
+function handleOverlay (evt){
+  if (evt.target.classList.contains('popup_opend')){ 
+    closePopup(evt.target);
   }
 }
 
@@ -30,35 +28,47 @@ export function openPopup(popup) {
   popup.classList.add("popup_opend");
   //включить слушатели
   document.addEventListener("keydown", closeOnEsc);
-  document.addEventListener("click", closeOnEnotherclick);
+  document.addEventListener("mousedown", handleOverlay);
 };
 
 export function closePopup(popup) {
   popup.classList.remove("popup_opend");
   //выключить слушатели
   document.removeEventListener("keydown", closeOnEsc);
-  document.removeEventListener("click", closeOnEnotherclick);
+  document.removeEventListener("mousedown", handleOverlay);
 };
 
-export function submitEditProfileForm(evt) {
+//смена текста на кнопке при загрузке
+function renderLoading(isLoading, button, buttonText='Сохранить', loadingText='Сохранение...') {
+  if (isLoading) {
+    button.textContent = loadingText
+  } else {
+    button.textContent = buttonText
+  }
+}
+
+//обработка отправления формы
+export function handleSubmit(request, evt, loadingText = "Сохранение...") {
   evt.preventDefault();
 
-  profileName.textContent = profileEditName.value;
-  profileAbout.textContent = profileEditAbout.value;
+  const submitButton = evt.submitter;
+  const initialText = submitButton.textContent;
+  renderLoading(true, submitButton, initialText, loadingText);
+  request()
+    .then(() => {
+      // форму нужно очищать после успешного ответа от сервера
+      evt.target.reset();
+    })
+    .catch((err) => {
+      console.error(`Ошибка: ${err}`);
+    })
+    .finally(() => {
+      renderLoading(false, submitButton, initialText);
+    });
+}
 
-  closePopup(profileEdit);
-};
-
-export function submitAddCardForm(evt) {
-  evt.preventDefault();
+export function submitAddCardForm() {
   closePopup(newElementAdd);
-};
-
-export function submitEditAvatarForm(evt) {
-  evt.preventDefault();
-  profileAvatar.setAttribute('style', `background-image: url(${profileEditAvatarLink.value});`);
-
-  closePopup(profileEditAvatar);
 };
 
 profileEditButton.addEventListener("click", function () {
