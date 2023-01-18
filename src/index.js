@@ -43,9 +43,6 @@ function handleSubmitProfileForm(evt) {
         profileName.textContent = userData.name;
         profileAbout.textContent = userData.about;
         closePopup(profileEdit);
-      })
-      .catch((err) => {
-        console.error(err);
       });
   }
   handleSubmit(makeRequest, evt);
@@ -60,9 +57,6 @@ function handleSubmitAvatarForm(evt) {
           `background-image: url(${userData.avatar});`
         );
         closePopup(profileEditAvatar);
-      })
-      .catch((err) => {
-        console.error(err);
       });
   }
   handleSubmit(makeRequest, evt);
@@ -77,9 +71,6 @@ function handleSubmitNewCardForm(evt) {
       .then((userData) => {
         addElement(userData);
         closePopup(newElementAdd);
-      })
-      .catch((err) => {
-        console.error(err);
       });
   }
   handleSubmit(makeRequest, evt);
